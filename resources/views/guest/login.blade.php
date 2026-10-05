@@ -1,15 +1,15 @@
 @extends('layouts.login')
 
-@section('title', 'Masuk | SMA Negeri 8 Yogyakarta')
+@section('title', 'Masuk | KAMOME GAKUEN')
 
 @section('content')
 <section class="login-page min-vh-100 d-flex flex-column align-items-center justify-content-center py-4 px-3">
 
     {{-- BRAND --}}
     <div class="d-flex align-items-center justify-content-center gap-3 mb-4 text-center">
-        <img src="{{ asset('assets/images/sekolah/logo.png') }}"
-             width="72" height="72" alt="Logo SMA Negeri 8 Yogyakarta">
-        <h1 class="login-brand-name mb-0">SMA NEGERI 8 YOGYAKARTA</h1>
+        <img src="{{ asset('assets/images/sekolah/logokamome.png') }}"
+             width="72" height="72" alt="Logo KAMOME GAKUEN">
+        <h1 class="login-brand-name mb-0">KAMOME GAKUEN</h1>
     </div>
 
     {{-- PESAN ERROR --}}

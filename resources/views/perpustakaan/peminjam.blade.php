@@ -163,7 +163,7 @@
 
                 <div class="row g-4 align-items-start">
                     <div class="col-md-5 text-center">
-                        <img id="modalPreview" src="{{ asset('assets/images/sekolah/logo.png') }}"
+                        <img id="modalPreview" src="{{ asset('assets/images/sekolah/logokamome.png') }}"
                              class="rounded-3 border shadow-sm mb-3"
                              style="width: 150px; height: 150px; object-fit: cover;" alt="Foto">
                         <input type="file" name="foto" id="inputFoto"
@@ -207,7 +207,7 @@
     function fotoPreview(item) {
         return item.foto
             ? '{{ asset("assets/images/siswa") }}/' + item.foto
-            : '{{ asset("assets/images/sekolah/logo.png") }}';
+            : '{{ asset("assets/images/sekolah/logokamome.png") }}';
     }
 
     function previewGambar(input) {
@@ -254,7 +254,7 @@
         document.getElementById('formMethod').value = 'POST';
         form.reset();
         setStatus(1);
-        document.getElementById('modalPreview').src = '{{ asset("assets/images/sekolah/logo.png") }}';
+        document.getElementById('modalPreview').src = '{{ asset("assets/images/sekolah/logokamome.png") }}';
         getModal().show();
     }
 

@@ -1,6 +1,6 @@
 @extends('layouts.guest')
 
-@section('title', 'Top Siswa Perpustakaan | SMA Negeri 8 Yogyakarta')
+@section('title', 'Top Siswa Perpustakaan | KAMOME GAKUEN')
 @section('hideNavbar', true)
 
 @section('content')
@@ -17,7 +17,7 @@
 
 {{-- DAFTAR TOP SISWA --}}
 <main class="container py-5 top-siswa-page" style="max-width: 1150px;">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
         @forelse ($topSiswa as $item)
             <div class="col">
                 <div class="top-siswa-card h-100">

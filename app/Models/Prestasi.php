@@ -24,6 +24,6 @@ class Prestasi extends Model
     {
         return $this->foto
             ? asset('assets/images/prestasi/' . $this->foto)
-            : asset('assets/images/sekolah/logo.png');
+            : asset('assets/images/sekolah/logokamome.png');
     }
 }

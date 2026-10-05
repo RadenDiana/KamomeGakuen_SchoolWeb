@@ -1,6 +1,6 @@
 @extends('layouts.guest')
 
-@section('title', 'Galeri | SMA Negeri 8 Yogyakarta')
+@section('title', 'Galeri | KAMOME GAKUEN')
 @section('hideNavbar', true)
 
 @section('content')

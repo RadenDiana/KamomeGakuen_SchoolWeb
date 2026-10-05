@@ -1,6 +1,6 @@
 @extends('layouts.guest')
 
-@section('title', 'Pengumuman | SMA Negeri 8 Yogyakarta')
+@section('title', 'Pengumuman | KAMOME GAKUEN')
 @section('hideNavbar', true)
 
 @section('content')
@@ -26,7 +26,7 @@
                          onclick="showDetail(this)">
                     <img src="{{ $item->gambar
                             ? asset('assets/images/pengumuman/' . $item->gambar)
-                            : asset('assets/images/sekolah/logo.png') }}"
+                            : asset('assets/images/sekolah/logokamome.png') }}"
                          class="announce-card-img {{ $item->gambar ? '' : 'obj-contain' }}"
                          alt="{{ $item->judul }}">
 
@@ -90,7 +90,7 @@
 
         document.getElementById('mdImage').src = item.gambar
             ? '{{ asset("assets/images/pengumuman") }}/' + item.gambar
-            : '{{ asset("assets/images/sekolah/logo.png") }}';
+            : '{{ asset("assets/images/sekolah/logokamome.png") }}';
         document.getElementById('mdTitle').innerText  = item.judul;
         document.getElementById('mdText').innerText   = item.isi;
         document.getElementById('mdDate').innerText   = new Date(item.tanggal || item.created_at)

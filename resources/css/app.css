@@ -10,16 +10,26 @@
    ADMIN — theme di atas Bootstrap
 ========================================================= */
 
-body.admin-body { background: #e8f7fc; zoom: .8; }
+:root { --admin-zoom: .8; --sidebar-width: 260px; }
+body.admin-body {
+    background: #e8f7fc;
+    zoom: var(--admin-zoom);
+    /* Aksen CRUD admin TETAP BIRU (pengecualian dari tema merah) */
+    --bs-primary: #2563eb;
+    --bs-primary-rgb: 37, 99, 235;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-active: #1e40af;
+}
 html { scroll-behavior: smooth; }
 
 /* --- Sidebar --- */
 .admin-sidebar {
     position: fixed;
     top: 0; bottom: 0; left: 0;
-    width: 260px;
+    width: var(--sidebar-width);
     padding: 25px 20px;
-    background: #0d172c;
+    background: #58141B;
     display: flex;
     flex-direction: column;
     z-index: 1000;
@@ -48,9 +58,9 @@ html { scroll-behavior: smooth; }
 }
 .admin-nav-link i { width: 20px; text-align: center; }
 .admin-nav-link:hover { background: rgba(255,255,255,.08); color: #fff; }
-.admin-nav-link.active { background: #2563eb; color: #fff; }
+.admin-nav-link.active { background: #F7EFE5; color: #58141B; }
 
-.admin-main { margin-left: 260px; padding: 25px 40px 40px; min-height: 100vh; }
+.admin-main { margin-left: var(--sidebar-width); padding: 25px 40px 40px; min-height: 100vh; }
 
 /* --- Header halaman --- */
 .admin-title { margin: 0; font-size: 20px; font-weight: 700; color: #111; }
@@ -58,12 +68,12 @@ html { scroll-behavior: smooth; }
 .admin-header-line { border-bottom: 1px solid #9ca3af; }
 
 /* --- Aksen desain --- */
-.admin-outline { border: 1px solid #2563eb; }
+.admin-outline { border: 1px solid #58141B; }
 .admin-card { border-radius: 12px; }
-.admin-thead { background: #d2e0fa; }
+.admin-thead { background: #ECB3B9; }
 .admin-thead th { color: #666; font-weight: 500; text-align: center; white-space: nowrap; }
 .admin-item { background: #eeeeef; border-radius: 11px; }
-.admin-footer { background: #d2e0fa; }
+.admin-footer { background: #ECB3B9; }
 
 /* --- Search & filter --- */
 .admin-search .form-control,
@@ -72,23 +82,23 @@ html { scroll-behavior: smooth; }
 .admin-search .input-group-text {
     background: #fff;
     color: #777;
-    border: 1px solid #2563eb;
+    border: 1px solid #58141B;
     border-right: 0;
     border-radius: 10px 0 0 10px;
 }
 
 .admin-search .form-control {
-    border: 1px solid #2563eb;
+    border: 1px solid #58141B;
     border-left: 0;
     border-radius: 0 10px 10px 0;
 }
 
-.admin-filter-select { border-radius: 10px; border: 1px solid #2563eb; }
+.admin-filter-select { border-radius: 10px; border: 1px solid #58141B; }
 
 /* --- Pill ekstrakurikuler --- */
 .admin-pill {
-    background: #0d172c;
-    border: 2px solid #0d172c;
+    background: #58141B;
+    border: 2px solid #58141B;
     border-radius: 16px;
     min-height: 52px;
     font-size: 12px;
@@ -96,21 +106,58 @@ html { scroll-behavior: smooth; }
     color: #fff;
     transition: .15s;
 }
-.admin-pill:hover { background: #17233d; color: #fff; }
-.admin-pill.selected { background: #17233d; border-color: #2563eb; }
+.admin-pill:hover { background: #6E1B26; color: #fff; }
+.admin-pill.selected { background: #6E1B26; border-color: #2563eb; }
 
 /* --- Badge status --- */
 .badge-admin { min-width: 84px; padding: 6px 16px; font-size: 11px; }
 
+/* --- Topbar mobile + sidebar off-canvas --- */
+.admin-topbar { display: none; }
+
 @media (max-width: 991.98px) {
-    .admin-sidebar { position: static; width: 100%; height: auto; }
-    .admin-main { margin-left: 0; padding: 20px; }
+    /* Nonaktifkan zoom 80% di HP agar teks tidak terlalu kecil */
+    body.admin-body { zoom: 1; }
+
+    .admin-sidebar {
+        position: fixed;
+        top: 0; bottom: 0; left: 0;
+        width: min(80vw, 300px) !important;
+        height: 100vh;
+        overflow-y: auto;
+        transform: translateX(-110%);
+        visibility: hidden;
+        transition: transform .25s ease, visibility .25s;
+    }
+    .admin-sidebar.show { transform: translateX(0); visibility: visible; }
+
+    .admin-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #58141B;
+        padding: 10px 16px;
+        position: sticky;
+        top: 0;
+        z-index: 998;
+    }
+
+    .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, .5);
+        z-index: 997;
+        display: none;
+    }
+    .sidebar-backdrop.show { display: block; }
+
+    .admin-main { margin-left: 0; padding: 16px; min-height: calc(100vh - 57px); }
 }
 
 /* --- Area data: tinggi tetap, sama di semua halaman --- */
 .admin-scroll {
     height: 420px;
-    overflow-y: auto;   /* jaring pengaman kalau teks panjang menyebabkan overflow tipis */
+    overflow-y: auto;
 }
 .admin-scroll::-webkit-scrollbar { width: 5px; }
 .admin-scroll::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 10px; }
@@ -118,44 +165,60 @@ html { scroll-behavior: smooth; }
 .admin-scroll thead th { position: sticky; top: 0; z-index: 1; }
 
 /* =========================================================
-   THEME SMAN 8 — override Bootstrap
+   THEME — override Bootstrap
 ========================================================= */
 :root {
-    --bs-primary: #2563eb;
-    --bs-primary-rgb: 37, 99, 235;
+    --bs-primary: #C5192B;
+    --bs-primary-rgb: 197, 25, 43;
     --bs-body-font-family: 'Inter', sans-serif;
-    --sman8-navy: #071225;
+    --sman8-navy: #58141B;
+    --primary: #C5192B;
+    --primary-hover: #A01423;
+    --primary-active: #85101D;
 }
 
-/* Tombol utama */
+/* Tombol utama — biru di admin (scope body.admin-body), merah di guest */
 .btn-primary {
+    --bs-btn-bg: var(--primary);
+    --bs-btn-border-color: var(--primary);
+    --bs-btn-hover-bg: var(--primary-hover);
+    --bs-btn-hover-border-color: var(--primary-hover);
+    --bs-btn-active-bg: var(--primary-active);
+    --bs-btn-active-border-color: var(--primary-active);
+    --bs-btn-disabled-bg: var(--primary);
+    --bs-btn-disabled-border-color: var(--primary);
+}
+
+/* Tombol biru tetap (pengecualian: Kirim Pesan di guest) */
+.btn-biru {
+    --bs-btn-color: #fff;
     --bs-btn-bg: #2563eb;
     --bs-btn-border-color: #2563eb;
+    --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: #1d4ed8;
     --bs-btn-hover-border-color: #1d4ed8;
+    --bs-btn-active-color: #fff;
     --bs-btn-active-bg: #1e40af;
     --bs-btn-active-border-color: #1e40af;
-    --bs-btn-disabled-bg: #2563eb;
-    --bs-btn-disabled-border-color: #2563eb;
 }
 
-/* Navbar gelap transparan + menu aktif kotak biru */
+/* Navbar gelap transparan + menu aktif */
 .navbar-sman8 {
-    background: rgba(5, 12, 27, .93);
+    background: rgba(88, 20, 27, .93);
     backdrop-filter: blur(12px);
 }
 .navbar-sman8 .nav-link { color: #dbe3f0; font-size: 13px; font-weight: 500; }
 .navbar-sman8 .nav-link:hover,
 .navbar-sman8 .nav-link.active {
     color: #fff;
-    background: #1d4ed8;
+    background: #C5192B;
     border-radius: 6px;
 }
 
-/* Section gelap navy */
+/* Section gelap */
 .section-dark { background: var(--sman8-navy); color: #fff; }
 
-/* Judul section dengan garis bawah biru */
+/* Judul section dengan garis bawah */
 .title-underline { position: relative; display: inline-block; padding-bottom: .8rem; }
 .title-underline::after {
     content: "";
@@ -192,7 +255,7 @@ html { scroll-behavior: smooth; }
     .info-cell:first-child { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.25); }
 }
 
-/* Pill ekstrakurikuler — hover biru */
+/* Pill ekstrakurikuler — hover */
 .extra-pill { transition: .25s; }
 .extra-pill:hover { background: var(--bs-primary) !important; transform: translateY(-2px); }
 
@@ -227,7 +290,7 @@ section[id] { scroll-margin-top: 80px; }
     text-decoration: none;
     transition: .2s;
 }
-.page-back:hover { color: #1d4ed8; }
+.page-back:hover { color: #A01423; }
 
 .page-title {
     color: var(--bs-primary);
@@ -245,7 +308,7 @@ section[id] { scroll-margin-top: 80px; }
 /* =========================================================
    KARTU PENGUMUMAN (halaman)
 ========================================================= */
-.modal-announcement { max-width: 540px; } 
+.modal-announcement { max-width: 540px; }
 /*pop up edit&tambah jdi lebihkecil*/
 
 .announce-card {
@@ -341,10 +404,10 @@ section[id] { scroll-margin-top: 80px; }
 
 
 /* =========================================================
-   LOGIN (ukuran sesuai desain — muat satu layar)
+   LOGIN
 ========================================================= */
 
-.login-page { background: #0d1529; }
+.login-page { background: #58141B; }
 
 .login-brand-name {
     color: #fff;
@@ -355,8 +418,8 @@ section[id] { scroll-margin-top: 80px; }
 .login-card {
     border-radius: 24px;
     box-shadow:
-        0 0 14px rgba(37, 99, 235, .6),
-        0 0 35px rgba(37, 99, 235, .4),
+        0 0 14px rgba(197, 25, 43, .6),
+        0 0 35px rgba(197, 25, 43, .4),
         0 10px 35px rgba(0, 0, 0, .25);
 }
 
@@ -375,7 +438,7 @@ section[id] { scroll-margin-top: 80px; }
 .login-input::placeholder { color: #697180; }
 .login-input:focus {
     background: #eee;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+    box-shadow: 0 0 0 3px rgba(197, 25, 43, .15);
 }
 
 .login-submit {
@@ -391,7 +454,7 @@ section[id] { scroll-margin-top: 80px; }
     cursor: pointer;
     transition: .2s;
 }
-.login-submit:hover { background: #fff; color: #0d1529; }
+.login-submit:hover { background: #fff; color: #58141B; }
 
 .login-back {
     color: #fff;
@@ -418,18 +481,18 @@ section[id] { scroll-margin-top: 80px; }
 .hero-sub { color: #e2e8f0; }
 
 .home-title { font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; line-height: 1.2; }
-.title-underline { width: 220px; height: 4px; background: #2563eb; border-radius: 99px; margin-top: 12px; }
+.title-underline { width: 220px; height: 4px; background: #C5192B; border-radius: 99px; margin-top: 12px; }
 
-.section-dark { background: #0f172a; color: #fff; }
+.section-dark { background: #58141B; color: #fff; }
 
 .dark-card { background: #fff; color: #0f172a; border-radius: 14px; overflow: hidden; height: 100%; }
 .dark-card img { width: 100%; height: 190px; object-fit: cover; display: block; }
 
-.pill-ekskul { background: #0f172a; color: #fff; font-weight: 600; padding: 14px 12px;
+.pill-ekskul { background: #58141B; color: #fff; font-weight: 600; padding: 14px 12px;
     border-radius: 12px; text-align: center; transition: .2s; }
-.pill-ekskul:hover { background: #1e293b; color: #fff; }
+.pill-ekskul:hover { background: #6E1B26; color: #fff; }
 
-.quote-section { background: linear-gradient(135deg, #2f6bff 0%, #1d4ed8 60%, #173db3 100%); color: #fff; }
+.quote-section { background: linear-gradient(135deg, #72020E 0%, #E0263A 100%); color: #fff; }
 .quote-slide { min-height: 240px; display: flex; align-items: center; justify-content: center; padding: 70px 16px; }
 .quote-slide p { max-width: 850px; text-align: center; font-size: clamp(1.1rem, 2.2vw, 1.6rem); }
 
@@ -437,21 +500,21 @@ section[id] { scroll-margin-top: 80px; }
     height: 100%; text-align: center; }
 .top-siswa-card img { width: 100%; height: 230px; object-fit: cover; background: #dc2626; display: block; }
 
-.table-rekap th { background: #0f172a; color: #fff; font-weight: 600; text-align: center; white-space: nowrap; }
+.table-rekap th { background: #58141B; color: #fff; font-weight: 600; text-align: center; white-space: nowrap; }
 .table-rekap td { text-align: center; }
 .table-rekap th, .table-rekap td { border: 1px solid #cbd5e1; vertical-align: middle; }
 
 .galeri-grid-img { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; display: block; }
 
-.kontak-ikon { width: 46px; height: 46px; border: 2px solid #2563eb; border-radius: 50%;
-    color: #2563eb; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.kontak-ikon { width: 46px; height: 46px; border: 2px solid #C5192B; border-radius: 50%;
+    color: #C5192B; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
 .carousel-indicators.position-static { position: static; margin: 1rem 0 0; }
 .carousel-indicators [data-bs-target] { width: 10px; height: 10px; border-radius: 50%; }
 
 /* ===================== ADMIN: DATA SISWA ===================== */
-.table-siswa thead th { background: #d7e3fc; color: #334155; font-weight: 600; white-space: nowrap; }
-.table-footer-bar { background: #d7e3fc; }
+.table-siswa thead th { background: #ECB3B9; color: #334155; font-weight: 600; white-space: nowrap; }
+.table-footer-bar { background: #ECB3B9; }
 .badge-aktif { background: #86efac; color: #14532d; }
 .badge-nonaktif { background: #e2e8f0; color: #475569; }
 .btn-aksi { width: 34px; height: 34px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff;
@@ -468,7 +531,7 @@ section[id] { scroll-margin-top: 80px; }
     .prestasi-img { width: 100%; height: 180px; }
 }
 .prestasi-foto-detail { width: 220px; height: 170px; object-fit: cover; border-radius: 12px; }
-.modal-footer-soft { background: #d7e3fc; }
+.modal-footer-soft { background: #ECB3B9; }
 
 /* ===================== PERPUSTAKAAN ===================== */
 .chip-buku { border: 1.5px solid #111827; border-radius: 10px;
@@ -489,7 +552,7 @@ section[id] { scroll-margin-top: 80px; }
 }
 .prestasi-card-img {
     width: 100%;
-    height: 300px;
+    height: 225px;
     object-fit: cover;
     border-radius: 12px;
     display: block;
@@ -523,7 +586,7 @@ section[id] { scroll-margin-top: 80px; }
 
 /* ===================== FIX: foto top siswa lebih tinggi (halaman /top-siswa) ===================== */
 @media (min-width: 768px) {
-    .top-siswa-page .top-siswa-card img { height: 360px; }
+    .top-siswa-page .top-siswa-card img { height: 280px; }
 }
 /* Sidebar: email/judul panjang tetap dalam kotak, tidak keluar */
 .admin-sidebar .text-white.lh-sm { min-width: 0; }
@@ -609,3 +672,66 @@ section[id] { scroll-margin-top: 80px; }
 .col-dashboard-kiri .card-komentar { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
 .col-dashboard-kiri .card-komentar .card-body { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
 .col-dashboard-kiri .card-komentar .admin-scroll { flex: 1 1 auto; height: auto; min-height: 0; }
+
+/* Kompensasi zoom 80% untuk backdrop modal (hanya desktop; di HP zoom=1) */
+@media (min-width: 992px) {
+    body.admin-body .modal-backdrop {
+        width: calc(100vw / 0.8);
+        height: calc(100vh / 0.8);
+    }
+}
+
+/* ===================== SIDEBAR: HANDLE GESER LEBAR ===================== */
+.sidebar-resize {
+    position: absolute;
+    top: 0; bottom: 0;
+    right: -3px;
+    width: 6px;
+    cursor: col-resize;
+    z-index: 1001;
+    transition: background .15s;
+}
+.sidebar-resize:hover,
+body.resizing .sidebar-resize { background: rgba(37, 99, 235, .4); }
+
+body.resizing { user-select: none; cursor: col-resize; }
+
+@media (max-width: 991.98px) {
+    .sidebar-resize { display: none; }
+}
+/* ===================== GUEST: PRODUK ===================== */
+.produk-card {
+    background: #fff;
+    border: 1px solid #d8d8d8;
+    border-radius: 12px;
+    padding: 8px 8px 12px;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .14);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+.produk-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(15, 23, 42, .10);
+}
+.produk-card-img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 9px;
+    display: block;
+}
+.produk-card-title {
+    color: var(--bs-primary);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+.produk-harga { color: #C5192B; font-size: 14px; }
+.produk-card-text {
+    color: #111827;
+    font-size: 12.5px;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

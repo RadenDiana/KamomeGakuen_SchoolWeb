@@ -1,6 +1,6 @@
 <aside class="admin-sidebar">
     <div class="d-flex align-items-center gap-3 mb-5">
-        <img src="{{ asset('assets/images/sekolah/logo.png') }}" class="admin-avatar" alt="Logo">
+        <img src="{{ asset('assets/images/sekolah/logokamome.png') }}" class="admin-avatar" alt="Logo">
         <div class="text-white lh-sm">
             <div class="fw-bold fs-5">{{ auth()->user()->username ?? 'Admin' }}</div>
             <div class="small text-white-50">{{ auth()->user()->email }}</div>
@@ -47,12 +47,14 @@
         </a>
     </nav>
 
-    <div class="mt-auto">
+    <div class="mt-4">
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button class="btn btn-outline-danger rounded-3 px-4">
+            <button class="btn btn-outline-light rounded-3 px-4">
                 <i class="fa-solid fa-arrow-left me-2"></i>Keluar
             </button>
         </form>
     </div>
+
+    <div class="sidebar-resize" title="Geser untuk mengatur lebar"></div>
 </aside>

@@ -52,7 +52,7 @@
 
         <div class="d-flex flex-column flex-md-row align-items-center gap-4">
             <div class="border rounded-3 p-3 bg-white">
-                <img src="{{ asset('assets/images/sekolah/logo.png') }}"
+                <img src="{{ asset('assets/images/sekolah/logokamome.png') }}"
                      style="width: 80px; height: 80px; object-fit: contain;" alt="Foto Admin">
             </div>
 
@@ -71,7 +71,13 @@
                 </div>
                 <div class="row">
                     <div class="col-5 col-md-3 text-secondary small">Password</div>
-                    <div class="col-7 col-md-9 small">********</div>
+                    <div class="col-7 col-md-9 small d-flex align-items-center gap-2">
+                        <span id="detailPassword">********</span>
+                        <button type="button" class="btn btn-sm btn-outline-secondary border-0 p-1"
+                                onclick="togglePasswordDetail()" title="Tampilkan/Sembunyikan password">
+                            <i class="fa-regular fa-eye" id="detailToggleIcon"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -115,9 +121,15 @@
                     <option value="perpustakaan">Admin Perpustakaan</option>
                 </select>
 
-                <input type="password" name="password" id="inputPassword"
-                       class="form-control bg-body-tertiary border-0 py-3"
-                       placeholder="Kata Sandi">
+                <div class="input-group">
+                    <input type="password" name="password" id="inputPassword"
+                           class="form-control bg-body-tertiary border-0 py-3"
+                           placeholder="Kata Sandi">
+                    <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()"
+                            tabindex="-1" aria-label="Tampilkan password">
+                        <i class="fa-regular fa-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
 
                 <small class="text-secondary d-none" id="passwordHelp">(Kosongkan jika tidak ingin mengubah)</small>
             </div>
@@ -145,6 +157,10 @@
         document.getElementById('detailEmail').innerText    = current.email;
         document.getElementById('detailRole').innerText     = current.role === 'perpustakaan' ? 'Admin Perpustakaan' : 'Admin';
 
+        // Tampilkan password_plain dari database (default tersembunyi)
+        document.getElementById('detailPassword').innerText = current.password_plain ?? '********';
+        document.getElementById('detailToggleIcon').className = 'fa-regular fa-eye';
+
         document.getElementById('formDelete').action = `/admin/akun/${current.id}`;
         const panel = document.getElementById('detailPanel');
         panel.classList.remove('d-none');
@@ -153,6 +169,19 @@
 
     function closeDetail() {
         document.getElementById('detailPanel').classList.add('d-none');
+    }
+
+    function togglePasswordDetail() {
+        const span = document.getElementById('detailPassword');
+        const ikon = document.getElementById('detailToggleIcon');
+        const tersembunyi = span.innerText === '********';
+
+        if (tersembunyi) {
+            span.innerText = current?.password_plain ?? 'Password tidak tersedia';
+        } else {
+            span.innerText = '********';
+        }
+        ikon.className = tersembunyi ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
     }
 
     function prepareCreate() {
@@ -179,6 +208,15 @@
         document.getElementById('passwordHelp').classList.remove('d-none');
 
         getModal().show();
+    }
+
+    function togglePassword() {
+        const input = document.getElementById('inputPassword');
+        const ikon  = document.getElementById('toggleIcon');
+        const tampil = input.type === 'password';
+
+        input.type = tampil ? 'text' : 'password';
+        ikon.className = tampil ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
     }
 </script>
 

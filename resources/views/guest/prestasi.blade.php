@@ -1,6 +1,6 @@
 @extends('layouts.guest')
 
-@section('title', 'Prestasi | SMA Negeri 8 Yogyakarta')
+@section('title', 'Prestasi | KAMOME GAKUEN')
 @section('hideNavbar', true)
 
 @section('content')
@@ -17,7 +17,7 @@
 
 {{-- DAFTAR PRESTASI --}}
 <main class="container py-5" style="max-width: 1150px;">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
         @forelse ($prestasis as $item)
             <div class="col">
                 <div class="prestasi-card h-100">

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Admin\ProfilSekolahController;
 use App\Http\Controllers\Guest\HomeController;
 use App\Http\Controllers\Guest\LoginController;
 use App\Http\Controllers\Guest\GaleriController as GuestGaleriController;
@@ -10,7 +11,10 @@ use App\Http\Controllers\Guest\PrestasiController as GuestPrestasiController;
 use App\Http\Controllers\Guest\TopSiswaController as GuestTopSiswaController;
 use App\Http\Controllers\Guest\KontakController as GuestKontakController;
 use App\Http\Controllers\Guest\RatingController as GuestRatingController;
+use App\Http\Controllers\Guest\ProdukController as GuestProdukController;
 
+
+use App\Http\Controllers\Admin\KomentarController as AdminKomentarController;
 use App\Http\Controllers\Admin\AkunController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EkstrakurikulerController;
@@ -19,7 +23,9 @@ use App\Http\Controllers\Admin\PengumumanController as AdminPengumumanController
 use App\Http\Controllers\Admin\SiswaController as AdminSiswaController;
 use App\Http\Controllers\Admin\PrestasiController as AdminPrestasiController;
 use App\Http\Controllers\Admin\KontakController as AdminKontakController;
+use App\Http\Controllers\Admin\ProdukController as AdminProdukController;
 
+use App\Http\Controllers\Guest\ProfilController as GuestProfilController;
 use App\Http\Controllers\Perpustakaan\DashboardController as PerpusDashboardController;
 use App\Http\Controllers\Perpustakaan\BukuController;
 use App\Http\Controllers\Perpustakaan\PeminjamanController;
@@ -31,10 +37,12 @@ use App\Http\Controllers\Perpustakaan\PeminjamController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/profil-sekolah', [GuestProfilController::class, 'index'])->name('guest.profil');
 Route::get('/pengumuman', [GuestPengumumanController::class, 'index'])->name('guest.pengumuman');
 Route::get('/galeri', [GuestGaleriController::class, 'index'])->name('guest.galeri');
 Route::get('/prestasi', [GuestPrestasiController::class, 'index'])->name('guest.prestasi');
 Route::get('/top-siswa', [GuestTopSiswaController::class, 'index'])->name('guest.top-siswa');
+Route::get('/produk', [GuestProdukController::class, 'index'])->name('guest.produk');
 Route::post('/kontak', [GuestKontakController::class, 'store'])->name('guest.kontak.store');
 Route::post('/rating', [GuestRatingController::class, 'store'])->name('guest.rating.store');
 
@@ -64,7 +72,14 @@ Route::prefix('admin')
         Route::resource('ekstrakurikuler', EkstrakurikulerController::class)
             ->except(['create', 'edit', 'show']);
         
+        Route::get('komentar', [AdminKomentarController::class, 'index'])->name('komentar.index');
+        Route::delete('komentar/{rating}', [AdminKomentarController::class, 'destroy'])->name('komentar.destroy');
+        Route::post('komentar/bulk', [AdminKomentarController::class, 'bulkDestroy'])->name('komentar.bulk');
+        
         Route::resource('siswa', AdminSiswaController::class)
+            ->except(['create', 'edit', 'show']);
+
+        Route::resource('produk', AdminProdukController::class)
             ->except(['create', 'edit', 'show']);
 
         Route::resource('prestasi', AdminPrestasiController::class)
@@ -86,6 +101,13 @@ Route::prefix('admin')
         Route::get('kontak', [AdminKontakController::class, 'index'])->name('kontak.index');
         Route::post('kontak/{kontak}/balas', [AdminKontakController::class, 'balas'])->name('kontak.balas');
         Route::delete('kontak/{kontak}', [AdminKontakController::class, 'destroy'])->name('kontak.destroy');
+        //profil sekolah
+        Route::get('profil', [ProfilSekolahController::class, 'index'])->name('profil.index');
+        Route::put('profil', [ProfilSekolahController::class, 'update'])->name('profil.update');
+
+        Route::post('profil/struktur', [ProfilSekolahController::class, 'strukturStore'])->name('profil.struktur.store');
+        Route::put('profil/struktur/{struktur}', [ProfilSekolahController::class, 'strukturUpdate'])->name('profil.struktur.update');
+        Route::delete('profil/struktur/{struktur}', [ProfilSekolahController::class, 'strukturDestroy'])->name('profil.struktur.destroy');
     });
 
 /* ================================

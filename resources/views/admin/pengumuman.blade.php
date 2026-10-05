@@ -99,7 +99,7 @@
 
         <div class="d-flex flex-column flex-md-row align-items-center gap-4">
             <div class="text-center">
-                <img id="detailImage" src="{{ asset('assets/images/sekolah/logo.png') }}"
+                <img id="detailImage" src="{{ asset('assets/images/sekolah/logokamome.png') }}"
                      class="rounded-3" style="width: 140px; height: 140px; object-fit: cover;" alt="Gambar">
                 <div class="small text-secondary mt-2">Dibuat oleh Admin</div>
             </div>
@@ -136,7 +136,7 @@
 
                 <div class="row g-4 align-items-start">
                     <div class="col-md-5 text-center">
-                        <img id="modalPreview" src="{{ asset('assets/images/sekolah/logo.png') }}"
+                        <img id="modalPreview" src="{{ asset('assets/images/sekolah/logokamome.png') }}"
                              class="rounded-3 border shadow-sm mb-3"
                              style="width: 150px; height: 150px; object-fit: cover;" alt="Gambar">
                         <input type="file" name="gambar" id="inputGambar"
@@ -189,7 +189,7 @@
     function gambarPreview(item) {
         return item.gambar
             ? '{{ asset("assets/images/pengumuman") }}/' + item.gambar
-            : '{{ asset("assets/images/sekolah/logo.png") }}';
+            : '{{ asset("assets/images/sekolah/logokamome.png") }}';
     }
 
    function setStatus(status) {
@@ -237,7 +237,7 @@
         document.getElementById('formMethod').value = 'POST';
         form.reset();
         setStatus('publish');
-        document.getElementById('modalPreview').src = '{{ asset("assets/images/sekolah/logo.png") }}';
+        document.getElementById('modalPreview').src = '{{ asset("assets/images/sekolah/logokamome.png") }}';
         getModal().show();
     }
 

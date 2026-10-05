@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-sman8">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
-            <img src="{{ asset('assets/images/sekolah/logo.png') }}" width="40" height="40" alt="Logo">
-            <span class="fw-semibold small">SMA NEGERI 8 YOGYAKARTA</span>
+            <img src="{{ asset('assets/images/sekolah/logokamome.png') }}" width="40" height="40" alt="Logo">
+            <span class="fw-semibold small">KAMOME GAKUEN</span>
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuUtama">
@@ -25,6 +25,7 @@
             <li><a class="dropdown-item" href="{{ route('home') }}#prestasi">Prestasi</a></li>
             <li><a class="dropdown-item" href="{{ route('home') }}#top-siswa">Top Siswa Perpustakaan</a></li>
             <li><a class="dropdown-item" href="{{ route('home') }}#data-siswa">Data Siswa</a></li>
+            <li><a class="dropdown-item" href="{{ route('home') }}#produk">Produk</a></li>
         </ul>
     </li>
     <li class="nav-item">

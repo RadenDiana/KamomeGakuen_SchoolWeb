@@ -1,6 +1,6 @@
 @extends('layouts.guest')
 
-@section('title', 'Beranda | SMA Negeri 8 Yogyakarta')
+@section('title', 'Beranda | KAMOME GAKUEN')
 
 @section('content')
 
@@ -16,34 +16,36 @@
 
 {{-- ============ HERO ============ --}}
 <section id="beranda" class="hero-sman8"
-         style="background-image: linear-gradient(rgba(10,14,26,.55), rgba(10,14,26,.55)), url('{{ asset('assets/images/sekolah/hero-foto2.png') }}');">
+         style="background-image: linear-gradient(rgba(10,14,26,.55), rgba(10,14,26,.55)), url('{{ asset('assets/images/sekolah/herofoto1.png') }}');">
     <div class="container py-5">
         <h1 class="hero-title mb-3">Membangun Generasi<br>Cerdas dan Berkarakter</h1>
         <p class="hero-sub mb-4">Sekolah yang tidak hanya fokus pada belajar,<br>tetapi juga membentuk masa depan yang lebih baik.</p>
-        <a href="#sambutan" class="btn btn-primary btn-lg px-4">Sambutan Kepala Sekolah</a>
+        <a href="{{ route('guest.profil') }}" class="btn btn-primary btn-lg px-4">Profil Sekolah</a>
     </div>
 </section>
 
 {{-- ============ SAMBUTAN (statis, bukan CRUD) ============ --}}
 <section id="sambutan" class="bg-white">
     <div class="container py-5" style="max-width: 1100px;">
-        <h2 class="home-title mb-2"><span class="text-primary">SAMBUTAN KEPALA</span><br>SEKOLAH</h2>
+        <h2 class="home-title mb-2"><span class="text-primary">SAMBUTAN</span><br>SEKOLAH</h2>
         <div class="text-secondary mb-4">01 Maret 2026</div>
 
         <div class="row g-4 align-items-start">
-            <div class="col-md-3">
-                <img src="{{ asset('assets/images/sekolah/kepala-sekolah.png') }}" class="img-fluid rounded-3" alt="Kepala Sekolah">
+            <div class="col-md-5">
+                <img src="{{ asset('assets/images/sekolah/hero-foto (2).jpg') }}" class="img-fluid rounded-3 w-100" alt="Kepala Sekolah">
                 <div class="mt-3">
                     <div class="fw-semibold">Editorial</div>
                     <div class="small text-secondary">{{ now()->translatedFormat('d M Y') }}</div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-7">
                 <p class="mb-0" style="line-height: 1.9;">
-                    Assalamu'alaikum warahmatullahi wabarakataatuh. Alhamdulillahirobbil 'aalamiin. Salaam Bahagia...
-                    Kita panjatkan puji syukur ke hadirat Allah SWT Tuhan Yang Maha Kuasa atas limpahan rahmat dan
-                    hidayah-Nya untuk kita semua. Selamat datang di website SMA Negeri 8 Yogyakarta, media informasi
-                    sekolah yang dapat diakses setiap saat..
+                    Selamat Datang di Kamome Gakuen <br>
+                    <br>
+                    Selamat datang di portal resmi Kamome Gakuen. Kami berkomitmen menciptakan lingkungan belajar yang inspiratif, 
+                    kreatif, dan berkarakter, di mana setiap siswa didukung untuk mengembangkan potensi terbaik mereka dan siap menghadapi tantangan masa depan.<br>
+                    <br>
+                    Mari tumbuh, belajar, dan mengukir prestasi bersama Kamome Gakuen!
                 </p>
             </div>
         </div>
@@ -55,7 +57,7 @@
     <div class="container py-5" style="max-width: 1100px;">
         <h2 class="fw-bold mb-1">Pengumuman Terbaru</h2>
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <span class="text-white-50">Pengumuman terbaru SMA Negeri 8 Yogyakarta</span>
+            <span class="text-white-50">Pengumuman terbaru KAMOME GAKUEN</span>
             <a href="{{ route('guest.pengumuman') }}" class="text-white text-decoration-none">
                 Lihat Semua <i class="fa-solid fa-chevron-right small"></i>
             </a>
@@ -69,9 +71,10 @@
                        <div class="home-slide-row">
                              @foreach ($chunk as $item)
                                 <div class="home-slide-card">
-                                    <div class="dark-card h-100">
-                                        {{-- sesuaikan 'gambar' & 'isi' dengan kolom di tabel pengumumanmu --}}
-                                        <img src="{{ $item->gambar ? asset('assets/images/pengumuman/' . $item->gambar) : asset('assets/images/sekolah/logo.png') }}"
+                                    <div class="dark-card h-100" role="button" style="cursor: pointer;"
+                                         data-item="{{ json_encode($item) }}"
+                                         onclick="showPengumuman(this)">
+                                        <img src="{{ $item->gambar ? asset('assets/images/pengumuman/' . $item->gambar) : asset('assets/images/sekolah/logokamome.png') }}"
                                              alt="{{ $item->judul }}">
                                         <div class="p-3">
                                             <div class="small text-secondary">{{ $item->created_at->translatedFormat('d M Y') }}</div>
@@ -110,7 +113,7 @@
 
         <div id="ekstrakurikuler">
             <h5 class="fw-bold">Daftar Ekstrakurikuler</h5>
-            <div class="text-secondary mb-4">Ekstrakurikuler SMA Negeri 8 Yogyakarta</div>
+            <div class="text-secondary mb-4">Ekstrakurikuler KAMOME GAKUEN</div>
 
             <div class="row row-cols-1 row-cols-md-3 g-3">
                 @forelse ($ekstrakurikuler as $item)
@@ -130,7 +133,7 @@
     <div class="container py-5" style="max-width: 1100px;">
         <h2 class="fw-bold mb-1">Prestasi Siswa</h2>
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <span class="text-white-50">Prestasi Siswa SMA Negeri 8 Yogyakarta</span>
+            <span class="text-white-50">Prestasi Siswa KAMOME GAKUEN</span>
             <a href="{{ route('guest.prestasi') }}" class="text-white text-decoration-none">
                 Lihat Semua <i class="fa-solid fa-chevron-right small"></i>
             </a>
@@ -144,8 +147,10 @@
                         <div class="home-slide-row">
                              @foreach ($chunk as $item)
                                 <div class="home-slide-card">
-                                    <div class="dark-card h-100">
-                                        <img src="{{ $item->foto ? asset('assets/images/prestasi/' . $item->foto) : asset('assets/images/sekolah/logo.png') }}"
+                                    <div class="dark-card h-100" role="button" style="cursor: pointer;"
+                                         data-item="{{ json_encode($item) }}"
+                                         onclick="showPrestasi(this)">
+                                        <img src="{{ $item->foto ? asset('assets/images/prestasi/' . $item->foto) : asset('assets/images/sekolah/logokamome.png') }}"
                                              alt="{{ $item->judul }}">
                                         <div class="p-3">
                                             <div class="small text-secondary">{{ $item->created_at->translatedFormat('d M Y') }}</div>
@@ -200,28 +205,27 @@
     <div class="container py-5" style="max-width: 1100px;">
         <h2 class="fw-bold mb-1">Top Siswa Perpustakaan</h2>
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <span class="text-white-50">Top Peminjam Buku SMA Negeri 8 Yogyakarta</span>
+            <span class="text-white-50">Top Peminjam Buku KAMOME GAKUEN</span>
             <a href="{{ route('guest.top-siswa') }}" class="text-white text-decoration-none">
                 Lihat Semua <i class="fa-solid fa-chevron-right small"></i>
             </a>
         </div>
 
-        {{-- Nanti tinggal kirim array: ['foto','kelas','nama','jumlah'] --}}
         <div class="row row-cols-2 row-cols-md-5 g-4">
             @forelse ($topSiswa as $item)
-    <div class="col">
-        <div class="top-siswa-card h-100">
-            <img src="{{ $item->foto_url }}" alt="{{ $item->nama }}">
-            <div class="p-3">
-                <div class="small text-secondary">{{ $item->kelas }}</div>
-                <div class="fw-semibold">{{ $item->nama }}</div>
-                <div class="small text-secondary">{{ $item->total_pinjam }} Buku Telah Dipinjam</div>
-            </div>
-        </div>
-    </div>
-@empty
-    <div class="col-12"><p class="text-white-50 mb-0">Belum ada data perpustakaan.</p></div>
-@endforelse
+                <div class="col">
+                    <div class="top-siswa-card h-100">
+                        <img src="{{ $item->foto_url }}" alt="{{ $item->nama }}">
+                        <div class="p-3">
+                            <div class="small text-secondary">{{ $item->kelas }}</div>
+                            <div class="fw-semibold">{{ $item->nama }}</div>
+                            <div class="small text-secondary">{{ $item->total_pinjam }} Buku Telah Dipinjam</div>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-12"><p class="text-white-50 mb-0">Belum ada data perpustakaan.</p></div>
+            @endforelse
         </div>
     </div>
 </section>
@@ -230,7 +234,7 @@
 <section id="data-siswa" class="bg-white">
     <div class="container py-5" style="max-width: 1100px;">
         <h5 class="fw-bold mb-1">Data siswa</h5>
-        <div class="text-secondary mb-4">Data Siswa SMA Negeri 8 Yogyakarta</div>
+        <div class="text-secondary mb-4">Data Siswa KAMOME GAKUEN</div>
 
         <form method="GET" action="{{ route('home') }}" class="row g-3 mb-4">
             <div class="col-md-3">
@@ -281,6 +285,40 @@
     </div>
 </section>
 
+{{-- ============ PRODUK SEKOLAH ============ --}}
+<section id="produk" class="bg-white">
+    <div class="container py-5" style="max-width: 1100px;">
+        <div class="text-center mb-4">
+            <h2 class="home-title">PRODUK</h2>
+            <div class="title-underline mx-auto"></div>
+        </div>
+
+        <div class="text-end mb-3">
+            <a href="{{ route('guest.produk') }}" class="text-primary fw-semibold text-decoration-none">
+                Lihat Semua <i class="fa-solid fa-chevron-right small"></i>
+            </a>
+        </div>
+
+        <div class="row row-cols-2 row-cols-md-4 g-3">
+            @forelse ($produkHome as $item)
+                <div class="col">
+                    <div class="produk-card h-100" role="button" style="cursor: pointer;"
+                         data-item="{{ json_encode($item) }}"
+                         onclick="showProduk(this)">
+                        <img src="{{ $item->foto_url }}" alt="{{ $item->judul }}" class="produk-card-img">
+                        <div class="pt-2 px-1">
+                            <div class="produk-card-title mb-1">{{ $item->judul }}</div>
+                            <div class="fw-bold produk-harga">{{ $item->harga_format }}</div>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-12"><p class="text-center text-secondary mb-0">Belum ada produk.</p></div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
 {{-- ============ GALERI ============ --}}
 <section id="galeri" class="bg-white">
     <div class="container py-5" style="max-width: 1100px;">
@@ -318,7 +356,7 @@
         <div class="row g-4 align-items-center mb-4">
             <div class="col-md-7">
                 <iframe class="w-100 rounded-3" style="height: 320px; border: 0;"
-                        src="https://www.google.com/maps?q=SMA%20Negeri%208%20Yogyakarta&output=embed"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1676148.7215815391!2d137.8352250405415!3d34.86306196329262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x605d1b87f02e57e7%3A0x2e01618b22571b89!2sTokyo%2C%20Jepang!5e0!3m2!1sid!2sid!4v1791169766374!5m2!1sid!2sid"
                         loading="lazy"></iframe>
             </div>
             <div class="col-md-5">
@@ -327,21 +365,22 @@
                         <div class="kontak-ikon"><i class="fa-solid fa-location-dot"></i></div>
                         <div>
                             <div class="fw-bold">Alamat</div>
-                            <div class="text-secondary small">Jl. Sidobali No.1, Muja Muja, Umbulharjo, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55165</div>
+                            <div class="text-secondary small">〒105-0011 Tokyo-to, Minato-ku, Kamome-cho, 3-chome 11-4
+                                                               (105-0011 東京都港区かもめ町3丁目11-4)</div>
                         </div>
                     </div>
                     <div class="d-flex gap-3">
                         <div class="kontak-ikon"><i class="fa-solid fa-phone"></i></div>
                         <div>
                             <div class="fw-bold">Hubungi kami</div>
-                            <div class="text-secondary small">(0274) 513493</div>
+                            <div class="text-secondary small">+81 00 0000 0000</div>
                         </div>
                     </div>
                     <div class="d-flex gap-3">
                         <div class="kontak-ikon"><i class="fa-solid fa-envelope"></i></div>
                         <div>
                             <div class="fw-bold">Email kami</div>
-                            <div class="text-secondary small">sman8yogyakarta@yahoo.co.id</div>
+                            <div class="text-secondary small">KamomeGakuen@gmail.com</div>
                         </div>
                     </div>
                 </div>
@@ -387,7 +426,7 @@
                               placeholder="Tulis pesan...">{{ old('pesan') }}</textarea>
                 </div>
                 <div class="col-12 text-end">
-                    <button class="btn btn-primary px-5">Kirim Pesan</button>
+                    <button class="btn btn-biru px-5">Kirim Pesan</button>
                 </div>
             </form>
         </div>
@@ -433,12 +472,97 @@
     </div>
 </section>
 
+{{-- ============ MODAL DETAIL PENGUMUMAN ============ --}}
+<div class="modal fade" id="modalPengumuman" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-announcement">
+        <div class="modal-content border-0 rounded-4 overflow-hidden">
+            <div class="modal-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h2 class="h6 fw-bold text-uppercase mb-0" id="pmTitle">-</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-5 text-center">
+                        <img id="pmImage" src="" class="rounded-3 border"
+                             style="width: 100%; height: 130px; object-fit: cover;" alt="Gambar">
+                    </div>
+
+                    <div class="col-7">
+                        <span class="small text-secondary" id="pmDate">-</span>
+                        <p class="announce-text mt-2 mb-0" id="pmText" style="white-space: pre-wrap;">-</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-body-tertiary px-4 py-3 d-flex justify-content-center">
+                <button class="btn btn-outline-secondary bg-white px-5" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- ============ MODAL DETAIL PRESTASI ============ --}}
+<div class="modal fade" id="modalPrestasi" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 overflow-hidden">
+            <div class="modal-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h2 class="h6 fw-bold text-uppercase mb-0" id="prTitle">-</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-5 text-center">
+                        <img id="prImage" src="" class="rounded-3 border"
+                             style="width: 100%; height: 130px; object-fit: cover;" alt="Foto">
+                    </div>
+
+                    <div class="col-7">
+                        <span class="small text-secondary" id="prDate">-</span>
+                        <p class="announce-text mt-2 mb-0" id="prPenyelenggara">-</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-body-tertiary px-4 py-3 d-flex justify-content-center">
+                <button class="btn btn-outline-secondary bg-white px-5" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- ============ MODAL DETAIL PRODUK ============ --}}
+<div class="modal fade" id="modalProduk" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 overflow-hidden">
+            <div class="modal-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h2 class="h6 fw-bold text-uppercase mb-0" id="pdTitle">-</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-5 text-center">
+                        <img id="pdImage" src="" class="rounded-3 border"
+                             style="width: 100%; height: 130px; object-fit: cover;" alt="Foto">
+                    </div>
+
+                    <div class="col-7">
+                        <div class="fw-bold mb-2" style="color: #C5192B;" id="pdHarga">-</div>
+                        <p class="announce-text mb-0" id="pdDeskripsi" style="white-space: pre-wrap;">-</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-body-tertiary px-4 py-3 d-flex justify-content-center">
+                <button class="btn btn-outline-secondary bg-white px-5" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function pilihBintang(n) {
-        // Simpan nilai rating ke hidden input
         document.getElementById('inputRating').value = n;
 
-        // Isi bintang ke-n, kosongkan sisanya
         document.querySelectorAll('.star-rating i').forEach((bintang, index) => {
             if (index < n) {
                 bintang.classList.replace('fa-regular', 'fa-solid');
@@ -446,6 +570,49 @@
                 bintang.classList.replace('fa-solid', 'fa-regular');
             }
         });
+    }
+
+    /* ===== Detail popup: pengumuman, prestasi, produk ===== */
+
+    function showPengumuman(card) {
+        const item = JSON.parse(card.dataset.item);
+
+        document.getElementById('pmImage').src = item.gambar
+            ? '{{ asset("assets/images/pengumuman") }}/' + item.gambar
+            : '{{ asset("assets/images/sekolah/logokamome.png") }}';
+        document.getElementById('pmTitle').innerText = item.judul;
+        document.getElementById('pmDate').innerText = new Date(item.created_at)
+            .toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+        document.getElementById('pmText').innerText = item.isi ?? '-';
+
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('modalPengumuman')).show();
+    }
+
+    function showPrestasi(card) {
+        const item = JSON.parse(card.dataset.item);
+
+        document.getElementById('prImage').src = item.foto
+            ? '{{ asset("assets/images/prestasi") }}/' + item.foto
+            : '{{ asset("assets/images/sekolah/logokamome.png") }}';
+        document.getElementById('prTitle').innerText = item.judul;
+        document.getElementById('prDate').innerText = new Date(item.tanggal || item.created_at)
+            .toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+        document.getElementById('prPenyelenggara').innerText = item.penyelenggara || '-';
+
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('modalPrestasi')).show();
+    }
+
+    function showProduk(card) {
+        const item = JSON.parse(card.dataset.item);
+
+        document.getElementById('pdImage').src = item.foto
+            ? '{{ asset("assets/images/produk") }}/' + item.foto
+            : '{{ asset("assets/images/sekolah/logokamome.png") }}';
+        document.getElementById('pdTitle').innerText = item.judul;
+        document.getElementById('pdHarga').innerText = 'Rp ' + Number(item.harga).toLocaleString('id-ID');
+        document.getElementById('pdDeskripsi').innerText = item.deskripsi;
+
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('modalProduk')).show();
     }
 </script>
 

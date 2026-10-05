@@ -25,14 +25,14 @@ class KontakController extends Controller
         // Notifikasi email ke admin (email sekolah dari MAIL_FROM_ADDRESS)
         try {
             Mail::raw(
-                "Pesan baru masuk dari website SMA Negeri 8 Yogyakarta.\n\n"
+                "Pesan baru masuk dari website Kamome Gakuen.\n\n"
                 . "Nama    : {$request->nama}\n"
                 . "Email   : {$request->email}\n"
                 . "Subjek  : {$request->subjek}\n\n"
                 . "Pesan:\n{$request->pesan}\n\n"
                 . "Balas pesan ini melalui dashboard admin: " . route('admin.kontak.index'),
             function ($message) {
-                $message->subject('Pesan Baru dari Website | SMA Negeri 8 Yogyakarta');
+                $message->subject('Pesan Baru dari Website | Kamome Gakuen');
                 $message->to(config('mail.from.address'));
             });
         } catch (\Throwable $e) {

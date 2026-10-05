@@ -4,53 +4,61 @@
 
 @section('content')
 
-<div class="admin-header-line pb-3 mb-4">
-    <h1 class="admin-title">Dashboard</h1>
-    <div class="admin-breadcrumb">Dashboard</div>
+{{-- HEADER --}}
+<div class="admin-header-line pb-3 mb-4 d-flex justify-content-between align-items-start flex-wrap gap-3">
+    <div>
+        <h1 class="admin-title">Dashboard</h1>
+        <div class="admin-breadcrumb">Dashboard</div>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{{ route('admin.komentar.index') }}" class="btn btn-primary">Komentar</a>
+        <a href="{{ route('admin.profil.index') }}" class="btn btn-primary">Profil Sekolah</a>
+        <a href="{{ route('admin.produk.index') }}" class="btn btn-primary">Produk</a>
+    </div>
 </div>
 
 {{-- STATISTIK --}}
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 mb-4">
     <div class="col">
         <div class="card admin-outline admin-card shadow-sm h-100">
-            <div class="card-body text-center py-2">
-    <div class="fw-semibold" style="font-size: 12px;">Ekstrakurikuler</div>
-    <div class="d-flex align-items-center justify-content-center gap-2">
-        <i class="fa-solid fa-people-group"></i>
-        <span class="fs-5 fw-semibold">{{ $totalEkstrakurikuler }}</span>
-    </div>
-</div>
+            <div class="card-body text-center py-1 px-2">
+                <div class="fw-semibold" style="font-size: 11px;">Ekstrakurikuler</div>
+                <div class="d-flex align-items-center justify-content-center gap-2">
+                    <i class="fa-solid fa-people-group"></i>
+                    <span class="fs-6 fw-semibold">{{ $totalEkstrakurikuler }}</span>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col">
         <div class="card admin-outline admin-card shadow-sm h-100">
-            <div class="card-body text-center py-3">
-                <div class="fw-semibold" style="font-size: 13px;">Data Siswa</div>
-                <div class="d-flex align-items-center justify-content-center gap-2 mt-1">
+            <div class="card-body text-center py-1 px-2">
+                <div class="fw-semibold" style="font-size: 11px;">Data Siswa</div>
+                <div class="d-flex align-items-center justify-content-center gap-2">
                     <i class="fa-solid fa-user-graduate"></i>
-                    <span class="fs-4 fw-semibold">{{ $totalSiswa }}</span>
+                    <span class="fs-6 fw-semibold">{{ $totalSiswa }}</span>
                 </div>
             </div>
         </div>
     </div>
     <div class="col">
         <div class="card admin-outline admin-card shadow-sm h-100">
-            <div class="card-body text-center py-3">
-                <div class="fw-semibold" style="font-size: 13px;">Data Akun</div>
-                <div class="d-flex align-items-center justify-content-center gap-2 mt-1">
+            <div class="card-body text-center py-1 px-2">
+                <div class="fw-semibold" style="font-size: 11px;">Data Akun</div>
+                <div class="d-flex align-items-center justify-content-center gap-2">
                     <i class="fa-solid fa-user-gear"></i>
-                    <span class="fs-4 fw-semibold">{{ $totalAkun }}</span>
+                    <span class="fs-6 fw-semibold">{{ $totalAkun }}</span>
                 </div>
             </div>
         </div>
     </div>
     <div class="col">
         <div class="card admin-outline admin-card shadow-sm h-100">
-            <div class="card-body text-center py-3">
-                <div class="fw-semibold" style="font-size: 13px;">Galeri</div>
-                <div class="d-flex align-items-center justify-content-center gap-2 mt-1">
+            <div class="card-body text-center py-1 px-2">
+                <div class="fw-semibold" style="font-size: 11px;">Galeri</div>
+                <div class="d-flex align-items-center justify-content-center gap-2">
                     <i class="fa-solid fa-image"></i>
-                    <span class="fs-4 fw-semibold">{{ $totalGaleri }}</span>
+                    <span class="fs-6 fw-semibold">{{ $totalGaleri }}</span>
                 </div>
             </div>
         </div>
@@ -162,5 +170,48 @@
         </div>
     </div>
 </div>
+
+{{-- MODAL DETAIL KOMENTAR --}}
+<div class="modal fade" id="modalKomentar" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 overflow-hidden">
+            <div class="modal-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h2 class="h6 fw-bold text-uppercase mb-0">Detail Komentar</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span id="komentarRating" class="text-warning small"></span>
+                    <span class="small text-secondary" id="komentarTanggal">-</span>
+                    <span class="badge rounded-pill badge-admin bg-secondary-subtle text-secondary-emphasis ms-auto">Anonim</span>
+                </div>
+
+                <p class="mb-0" style="white-space: pre-wrap;" id="komentarIsi">-</p>
+            </div>
+            <div class="admin-footer px-4 py-3 d-flex justify-content-center">
+                <button type="button" class="btn btn-outline-secondary bg-white px-5" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showKomentar(btn) {
+        const item = JSON.parse(btn.dataset.item);
+
+        document.getElementById('komentarIsi').innerText = item.komentar;
+        document.getElementById('komentarTanggal').innerText =
+            new Date(item.created_at).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+
+        const bintang = document.getElementById('komentarRating');
+        bintang.innerHTML = '';
+        for (let i = 0; i < item.rating; i++) {
+            bintang.insertAdjacentHTML('beforeend', '<i class="fa-solid fa-star"></i>');
+        }
+
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('modalKomentar')).show();
+    }
+</script>
 
 @endsection

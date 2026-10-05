@@ -19,7 +19,7 @@ class BalasKontakMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Re: ' . $this->kontak->subjek . ' | SMA Negeri 8 Yogyakarta',
+            subject: 'Re: ' . $this->kontak->subjek . ' | KAMOME GAKUEN HIGH SCHOOL',
         );
     }
 

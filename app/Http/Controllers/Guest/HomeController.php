@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ekstrakurikuler;
 use App\Models\Galeri;
 use App\Models\Pengumuman;
+use App\Models\Produk;
 use App\Models\Prestasi;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
@@ -43,12 +44,13 @@ class HomeController extends Controller
             'ekstrakurikuler'   => Ekstrakurikuler::orderBy('nama')->get(),
             'galeriHome'        => Galeri::latest()->take(8)->get(),
             'prestasiHome'      => Prestasi::where('status', true)->orderByDesc('tanggal')->take(6)->get(),
+            'produkHome'        => Produk::orderBy('judul')->take(8)->get(),
             'topSiswa'          => Siswa::query()
                                      ->select('siswas.id', 'siswas.nama', 'siswas.kelas', 'siswas.foto')
                                      ->selectRaw('COUNT(peminjaman.id) AS total_pinjam')
                                      ->leftJoin('peminjaman', 'peminjaman.siswa_id', '=', 'siswas.id')
                                      ->groupBy('siswas.id', 'siswas.nama', 'siswas.kelas', 'siswas.foto')
-                                     ->having('total_pinjam', '>', 0) // hanya yang pernah meminjam
+                                     ->having('total_pinjam', '>', 0)
                                      ->orderByDesc('total_pinjam')
                                      ->orderBy('siswas.nama')
                                      ->take(5)

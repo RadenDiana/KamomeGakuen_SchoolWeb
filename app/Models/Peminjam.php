@@ -19,6 +19,6 @@ class Peminjam extends Model
     {
         return $this->foto
             ? asset('assets/images/siswa/' . $this->foto)
-            : asset('assets/images/sekolah/logo.png');
+            : asset('assets/images/sekolah/logokamome.png');
     }
 }

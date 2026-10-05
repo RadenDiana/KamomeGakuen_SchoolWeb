@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Admin') | SMA Negeri 8 Yogyakarta</title>
+    <title>@yield('title', 'Admin') | KAMOME GAKUEN</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -41,5 +41,48 @@
         @yield('content')
     </main>
 
+<script>
+    const SIDEBAR_MIN = 220, SIDEBAR_MAX = 360, SIDEBAR_DEFAULT = 260;
+
+    function setSidebar(px) {
+        px = Math.round(Math.min(SIDEBAR_MAX, Math.max(SIDEBAR_MIN, px)));
+        localStorage.setItem('sidebarWidth', px);
+        document.documentElement.style.setProperty('--sidebar-width', px + 'px');
+    }
+
+    setSidebar(parseInt(localStorage.getItem('sidebarWidth')) || SIDEBAR_DEFAULT);
+
+    /* ===== Sidebar mobile: buka/tutup ===== */
+    function toggleSidebar() {
+        document.querySelector('.admin-sidebar')?.classList.toggle('show');
+        document.getElementById('sidebarBackdrop')?.classList.toggle('show');
+    }
+
+    function tutupSidebar() {
+        document.querySelector('.admin-sidebar')?.classList.remove('show');
+        document.getElementById('sidebarBackdrop')?.classList.remove('show');
+    }
+    tutupSidebar();
+    window.addEventListener('pageshow', tutupSidebar);
+
+    /* ===== Handle geser lebar (desktop) ===== */
+    const handle = document.querySelector('.sidebar-resize');
+    if (handle) {
+        handle.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            document.body.classList.add('resizing');
+
+            const geser   = (ev) => setSidebar(ev.clientX / 0.8);
+            const selesai = () => {
+                document.body.classList.remove('resizing');
+                document.removeEventListener('mousemove', geser);
+                document.removeEventListener('mouseup', selesai);
+            };
+
+            document.addEventListener('mousemove', geser);
+            document.addEventListener('mouseup', selesai);
+        });
+    }
+</script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <body style="font-family: Arial, sans-serif; background: #f1f5f9; padding: 24px;">
     <div style="max-width: 560px; margin: auto; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0;">
         <div style="background: #2563eb; color: #fff; padding: 20px 24px;">
-            <h2 style="margin: 0; font-size: 18px;">SMA Negeri 8 Yogyakarta</h2>
+            <h2 style="margin: 0; font-size: 18px;">KAMOME GAKUEN</h2>
         </div>
         <div style="padding: 24px;">
             <p>Halo <strong>{{ $kontak->nama }}</strong>,</p>
@@ -19,7 +19,7 @@
                 "{{ $kontak->pesan }}"
             </p>
 
-            <p style="margin-bottom: 0;">Salam,<br><strong>Admin SMA Negeri 8 Yogyakarta</strong></p>
+            <p style="margin-bottom: 0;">Salam,<br><strong>Admin KAMOME GAKUEN</strong></p>
         </div>
     </div>
 </body>
